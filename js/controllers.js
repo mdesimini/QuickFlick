@@ -116,8 +116,8 @@ controllers.controller('MainController', function($scope, $http) {
 
                 $scope.backdrops = response.data.backdrops[0];
                 $scope.backdrop_fp = $scope.backdrops.file_path;
-                document.getElementById('#main').style.backgroundImage = "url('https://image.tmdb.org/t/p/original'+$scope.backdrop_fp)";
-                console.log('image erros');
+                //document.getElementById('#main').style.backgroundImage = "url('https://image.tmdb.org/t/p/original'+$scope.backdrop_fp)";
+                //console.log('image erros');
                 //https://image.tmdb.org/t/p/original/irHmdlkdJphmk4HPfyAQfklKMbY.jpg
                 //https://image.tmdb.org/t/p/original{{backdrops.file_path}}
                 
@@ -140,6 +140,7 @@ controllers.controller('MainController', function($scope, $http) {
             }).then(function successCallback(response) {
 
                     $scope.posterPic = response.data.posters[0].file_path;
+                    setBg($scope.posterPic);
 
             }, function errorCallback(response) {
 
@@ -168,14 +169,23 @@ controllers.controller('MainController', function($scope, $http) {
             }
     };   
     
+    $scope.bgImg = "url('https://image.tmdb.org/t/p/original"+$scope.posterPic+"')";
+    //$scope.bgImg = "url('https://image.tmdb.org/t/p/original/n1y094tVDFATSzkTnFxoGZ1qNsG.jpg')";
     
-    /*
     
-    $timeout(function(){
     
-    }
+    var setBg = function(val) {
+        document.getElementById('main').style.backgroundImage = "url('https://image.tmdb.org/t/p/original"+val+"')";
+        document.getElementById('main').style.backgroundImage = "background-size: cover";
+        document.getElementById('main').style.backgroundImage = "background-repeat: no-repeat";
+        document.getElementById('bg').style.backgroundImage = "url('https://image.tmdb.org/t/p/original"+$scope.backdrops.file_path+"')";
+        document.getElementById('bg').style.backgroundImage = "background-size: cover";
+        
+        //background-size: cover;
+    };
     
-    */
+    
+
     
 });
 
