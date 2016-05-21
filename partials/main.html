@@ -1,0 +1,34 @@
+<div id="home">
+    <div>
+    <h1 id="pageTitle">Movie/TV Search</h1>
+    <form>
+        <input class="form-control" ng-model="movieName" ng-model-options="{ debounce: 500 }" type="text" placeholder="Enter Title" autofocus>            
+        <!--<input type="submit" class="btn btn-default">-->
+    </form>
+        <!--<a href="#/recommend"><button class="btn" id="switch-button">Don't Know What To Watch?</button></a>-->
+        <!--<img ng-src="https://image.tmdb.org/t/p/original{{backdrops.file_path}}" width="300" height="auto">-->
+    </div>
+    <img id="poster" ng-src="https://image.tmdb.org/t/p/original{{posterPic}}" ng-show="movies.Plot">
+    <div id="movie-info">
+        <h2>{{movies.Title}}</h2>
+        <p>{{movies.Released}}</p>
+        <h4 style="margin-top: 20px;" ng-show="movies.Plot">Starring</h4>
+        <!--<h4 style="margin-top: 20px;" ng-hide="movies.Poster">No results found! Try entering the full name.</h4>-->
+        <h4 ng-model="alertMessage">{{alertMessage}}</h4>
+        <p id="starringActors" ng-show="movies.Plot">{{movies.Actors}}</p>
+        <p ng-show="movies.Plot"><b>Metascore: </b>{{movies.Metascore}} <b></p><p ng-show="movies.Plot"> IMDB:</b> {{movies.imdbRating}} ({{movies.imdbVotes}} Votes)</p>
+        <p ng-show="movies.Plot" style="text-align: center"><b>Rotten Tomatoes</b></p>
+        <div ng-show="movies.Plot"><a ng-href="{{movies.tomatoURL}}" target="_blank"><img class="tomato" src="images/fresh.png"></a> &nbsp;{{movies.tomatoFresh}} &nbsp;&nbsp;<a ng-href="{{movies.tomatoURL}}" target="_blank"><img class="tomato" src="images/rotten.png"></a> &nbsp;{{movies.tomatoRotten}}</div>
+    
+    </div>
+    
+    <div id="trailer-info">
+        <button ng-show="movies.Plot" type="button" class="btn" data-toggle="collapse" data-target="#plot-extended" style="margin-top: 20px; margin-bottom: 20px;" ng-model="valTest">Expand Plot</button>
+        <p id="plot-extended" class="collapse" >{{movies.Plot}}</p>
+        <p>{{trailers.title}}</p>
+        <!--{{trailers.code}}-->
+        <!--<button class="btn" ng-click="showingTrailer()">Trailer</button>-->
+    </div>
+
+    <div id="trail"></div>
+</div>

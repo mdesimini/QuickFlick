@@ -1,0 +1,42 @@
+@media screen and (max-width: 640px) {
+    
+    body {
+        background-color: black;   
+    }
+    
+    #container {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    
+    #main {
+        background-image: none;
+        color: darkgray;
+    }
+    
+}
+
+@media screen and (max-width: 1200px) {
+    #container {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    
+    #movie-info {
+        width: 85%;
+        margin: 0 auto;
+    }
+    
+    #logo {
+        width: 85%;
+        margin: 0 auto;
+    }
+    
+    #poster {
+        width: 75%;
+        height: auto;
+    }
+}
+
+
+
