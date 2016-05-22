@@ -1,10 +1,11 @@
 <div id="home">
     <div>
     <h1 id="pageTitle">Movie/TV Search</h1>
-    <form>
-        <input class="form-control" ng-model="movieName" ng-model-options="{ debounce: 800 }" type="text" placeholder="Enter Title" autofocus>            
-        <!--<input type="submit" class="btn btn-default">-->
-    </form>
+        <form>
+            <input class="form-control" ng-model="movieName" ng-model-options="{ debounce: 800 }" type="text" placeholder="Enter Title" autofocus>  
+            <input type="button" id="randomMovieButton" class="btn" value="Random Movie" ng-click="getRandomMovie()"> <!-- ng-model="movieName">-->
+            <!--<input type="submit" class="btn btn-default">-->
+        </form>
         <!--<a href="#/recommend"><button class="btn" id="switch-button">Don't Know What To Watch?</button></a>-->
         <!--<img ng-src="https://image.tmdb.org/t/p/original{{backdrops.file_path}}" width="300" height="auto">-->
     </div>
@@ -18,7 +19,7 @@
         <p id="starringActors" ng-show="movies.Plot">{{movies.Actors}}</p>
         <p ng-show="movies.Plot"><b>Metascore: </b>{{movies.Metascore}} <b></p><p ng-show="movies.Plot"> IMDB:</b> {{movies.imdbRating}} ({{movies.imdbVotes}} Votes)</p>
         <p ng-show="movies.Plot" style="text-align: center"><b>Rotten Tomatoes</b></p>
-        <div ng-show="movies.Plot"><a ng-href="{{movies.tomatoURL}}" target="_blank"><img class="tomato" src="images/fresh.png"></a> &nbsp;{{movies.tomatoFresh}} &nbsp;&nbsp;<a ng-href="{{movies.tomatoURL}}" target="_blank"><img class="tomato" src="images/rotten.png"></a> &nbsp;{{movies.tomatoRotten}}</div>
+        <div ng-show="movies.Plot"><a ng-href="{{movies.tomatoURL}}" class="hvr-pop" target="_blank"><img class="tomato" src="images/fresh.png"></a> &nbsp;{{movies.tomatoFresh}} &nbsp;&nbsp;<a ng-href="{{movies.tomatoURL}}" class="hvr-pop" target="_blank"><img class="tomato" src="images/rotten.png"></a> &nbsp;{{movies.tomatoRotten}}</div>
     
     </div>
     

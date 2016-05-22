@@ -8,6 +8,7 @@ controllers.controller('MainController', function($scope, $http) {
     $scope.backdrops = '';
     $scope.posterPic = '';
     $scope.noResults = {};
+    $scope.topTenMovie = '';
 
     $scope.movies = $scope.noResults;
     
@@ -56,36 +57,11 @@ controllers.controller('MainController', function($scope, $http) {
         
     };
     
-    //http://trailersapi.com/trailers.json?movie=The%20Dark%20Knight%20Rises&limit=5&width=320
-    //$scope.movieName
-    /*
-    var getTrailer = function() {
-        $http({
-            url: 'http://trailersapi.com/trailers.json?', 
-            method: "GET",
-            params: {movie: $scope.movieName}
-        }).then(function successCallback(response) {
-            
-                //console.log('success');
-                $scope.trailers = response.data[0];
-            
-        }, function errorCallback(response) {
-            
-                console.log('trailer error');
-                //$scope.trailers = $scope.noResults;
-
-        });
-    };*/
-    
-
-    
-   
-    
     //https://api.themoviedb.org/3/movie/550?
     //http://api.themoviedb.org/3/movie/tt2294629/videos?api_key=e480151695b9b1e60ac9adbf32ae1828
     
     
-        var getTrailer = function() {
+    var getTrailer = function() {
 
             $http({
                 url: 'http://api.themoviedb.org/3/movie/'+$scope.movieId+'/videos?api_key=e480151695b9b1e60ac9adbf32ae1828', 
@@ -105,7 +81,7 @@ controllers.controller('MainController', function($scope, $http) {
             });
             
             getBackdrops();
-        };
+    };
     
     var getBackdrops = function() {
     //http://api.themoviedb.org/3/movie/id/images
@@ -116,12 +92,7 @@ controllers.controller('MainController', function($scope, $http) {
 
                 $scope.backdrops = response.data.backdrops[0];
                 $scope.backdrop_fp = $scope.backdrops.file_path;
-                //document.getElementById('#main').style.backgroundImage = "url('https://image.tmdb.org/t/p/original'+$scope.backdrop_fp)";
-                //console.log('image erros');
-                //https://image.tmdb.org/t/p/original/irHmdlkdJphmk4HPfyAQfklKMbY.jpg
-                //https://image.tmdb.org/t/p/original{{backdrops.file_path}}
-                
-
+ 
         }, function errorCallback(response) {
 
                 console.log('trailer error');
@@ -132,7 +103,7 @@ controllers.controller('MainController', function($scope, $http) {
             getPoster();
     };
     
-            var getPoster = function() {
+    var getPoster = function() {
 
             $http({
                 url: 'http://api.themoviedb.org/3/movie/'+$scope.movieId+'/images?api_key=e480151695b9b1e60ac9adbf32ae1828', 
@@ -145,20 +116,17 @@ controllers.controller('MainController', function($scope, $http) {
             }, function errorCallback(response) {
 
                     console.log('poster error');
-                    //$scope.trailers = $scope.noResults;
 
             });
             
             
-        };
+    };
     
         
     $scope.showingTrailer = function() {
             
-            var trailDiv = document.getElementById('trail')
+            var trailDiv = document.getElementById('trail');
             
-            //var idata = $scope.trailers.code;
-        
             trailDiv.innerHTML = $scope.embedCode;
         
             if(trailDiv.innerHTML = $scope.embedCode) {
@@ -168,23 +136,52 @@ controllers.controller('MainController', function($scope, $http) {
                 return false;
             }
     };   
-    
-    $scope.bgImg = "url('https://image.tmdb.org/t/p/original"+$scope.posterPic+"')";
-    //$scope.bgImg = "url('https://image.tmdb.org/t/p/original/n1y094tVDFATSzkTnFxoGZ1qNsG.jpg')";
-    
-    
-    
+        
     var setBg = function(val) {
         document.getElementById('main').style.backgroundImage = "url('https://image.tmdb.org/t/p/original"+val+"')";
         document.getElementById('main').style.backgroundImage = "background-size: cover";
         document.getElementById('main').style.backgroundImage = "background-repeat: no-repeat";
         document.getElementById('bg').style.backgroundImage = "url('https://image.tmdb.org/t/p/original"+$scope.backdrops.file_path+"')";
         document.getElementById('bg').style.backgroundImage = "background-size: cover";
-        
-        //background-size: cover;
     };
     
-    
+    $scope.getRandomMovie = function() {
+        //http://api.themoviedb.org/3/movie/top_rated?api_key=e480151695b9b1e60ac9adbf32ae1828
+        var randomPage = Math.floor(Math.random()*120);
+        var randomSelection = Math.floor(Math.random()*11);
+        
+            $http({
+                url: 'http://api.themoviedb.org/3/movie/top_rated?page='+ randomPage +'&language=en&api_key=e480151695b9b1e60ac9adbf32ae1828', 
+                method: "GET"
+            }).then(function successCallback(response) {
+                    
+                $scope.topTenMovie = response.data.results[randomSelection];//.original_title;
+                
+                
+                var topTenTitle;// = $scope.topTenMovie;
+                
+                if($scope.topTenMovie.original_language=='en') {
+                    topTenTitle = $scope.topTenMovie.original_title;
+                    $scope.movieName = topTenTitle;
+                }
+                
+                else {
+                    console.log('first film not english, retrying');
+                    randomPage = Math.floor(Math.random()*120);
+                    randomSelection = Math.floor(Math.random()*11);   
+                    topTenTitle = $scope.topTenMovie.original_title;
+                    $scope.movieName = topTenTitle;                    
+                }
+
+                    //$scope.movieName = topTen;
+
+            }, function errorCallback(response) {
+
+                    console.log('random retrieval error');
+
+            });        
+        
+    };
 
     
 });

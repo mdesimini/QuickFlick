@@ -88,12 +88,12 @@ body {
     color: white;
 }
 
-.btn:hover {
+.btn:active {
     color: white;
 }
 
-.btn:active {
-    color: white;
+.btn.focus, .btn:focus, .btn:hover {
+    color: white;    
 }
 
 .btn-info {
@@ -160,5 +160,11 @@ iframe, object, embed {
 }
 
 #trailer-info {
+    margin-top: 25px;
+}
+
+#randomMovieButton {
+    display: block;
+    margin: 0 auto;
     margin-top: 25px;
 }
