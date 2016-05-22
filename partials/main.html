@@ -9,7 +9,7 @@
         <!--<a href="#/recommend"><button class="btn" id="switch-button">Don't Know What To Watch?</button></a>-->
         <!--<img ng-src="https://image.tmdb.org/t/p/original{{backdrops.file_path}}" width="300" height="auto">-->
     </div>
-    <img id="poster" ng-src="https://image.tmdb.org/t/p/original{{posterPic}}" ng-show="movies.Plot">
+    <img id="poster" ng-src="{{posterPic}}" ng-show="movies.Plot">
     <div id="movie-info">
         <h2>{{movies.Title}}</h2>
         <p>{{movies.Released}}</p>

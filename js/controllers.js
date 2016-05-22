@@ -41,14 +41,14 @@ controllers.controller('MainController', function($scope, $http) {
                       
                 $scope.movies = response.data;
                 $scope.poster = response.data.Poster;
-                delete response.data.Poster;
+                //delete response.data.Poster;
                 $scope.movieId= response.data.imdbID;
                 getTrailer();
                 
             
         }, function errorCallback(response) {
             
-                //$scope.movies = $scope.noResults;
+                console.log('movie data failed');
 
         });
         
@@ -75,7 +75,8 @@ controllers.controller('MainController', function($scope, $http) {
 
             }, function errorCallback(response) {
 
-                    console.log('trailer error');
+                    console.error('trailer error');
+                    document.getElementById('main').style.backgroundImage = "none";
                     //$scope.trailers = $scope.noResults;
 
             });
@@ -95,7 +96,8 @@ controllers.controller('MainController', function($scope, $http) {
  
         }, function errorCallback(response) {
 
-                console.log('trailer error');
+                console.error('backdrop error');
+                document.getElementById('bg').style.backgroundImage = "none";
                 //$scope.trailers = $scope.noResults;
 
         });
@@ -110,12 +112,13 @@ controllers.controller('MainController', function($scope, $http) {
                 method: "GET"
             }).then(function successCallback(response) {
 
-                    $scope.posterPic = response.data.posters[0].file_path;
+                    $scope.posterPic = 'https://image.tmdb.org/t/p/original' + response.data.posters[0].file_path;
                     setBg($scope.posterPic);
 
             }, function errorCallback(response) {
 
-                    console.log('poster error');
+                    console.error('poster error');
+                    $scope.posterPic = 'images/image-unavailable.jpg';
 
             });
             
@@ -160,24 +163,20 @@ controllers.controller('MainController', function($scope, $http) {
                 
                 var topTenTitle;// = $scope.topTenMovie;
                 
-                if($scope.topTenMovie.original_language=='en') {
+                if($scope.topTenMovie.original_language=="en") {
+                    console.log('its english');
                     topTenTitle = $scope.topTenMovie.original_title;
                     $scope.movieName = topTenTitle;
                 }
                 
                 else {
                     console.log('first film not english, retrying');
-                    randomPage = Math.floor(Math.random()*120);
-                    randomSelection = Math.floor(Math.random()*11);   
-                    topTenTitle = $scope.topTenMovie.original_title;
-                    $scope.movieName = topTenTitle;                    
+                    $scope.getRandomMovie();              
                 }
-
-                    //$scope.movieName = topTen;
 
             }, function errorCallback(response) {
 
-                    console.log('random retrieval error');
+                    console.error('random retrieval error');
 
             });        
         
