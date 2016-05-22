@@ -1,15 +1,20 @@
-html, body {
+html,
+body {
     margin: 0;
     padding: 0;
     font-family: Raleway;
-} 
-
+}
 body {
     /*background: url('../images/back_pattern.png');
     height: 100%;*/
     background-size: cover;
 }
-
+::selection {
+  background: #bfbfbf; /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+  background: #bfbfbf; /* Gecko Browsers */
+}
 [id="bg"] {
     /*
     background: center center fixed transparent;
@@ -18,14 +23,12 @@ body {
     -o-background-size: contain;
     background-size:contain;*/
 }
-
 #logo {
     display: block;
     width: 45%;
     height: auto;
     margin: 0 auto;
 }
-
 #container {
     max-width: 1000px;
     margin: 0 auto;
@@ -36,7 +39,6 @@ body {
     padding: 10px;
     /*box-shadow: 1px 1px 1px #888888;*/
 }
-
 #main {
     max-width: 950px;
     height: auto;
@@ -46,13 +48,12 @@ body {
     box-sizing: border-box;
     /*background: url('../images/transparent.png') repeat center top;*/
     background-color: white;
-    background-size:  cover;
+    background-size: cover;
     text-align: center;
     /*border-radius: 300px/100px;*/
     padding: 25px;
-    box-shadow: 1px 1px 1px #888888;
+    /*box-shadow: 1px 1px 1px #888888;*/
 }
-
 #poster {
     width: 25%;
     /*width: 250px;*/
@@ -65,75 +66,65 @@ body {
     vertical-align: top;
     margin-top: 35px;
 }
-
 #pageTitle {
-    font-family: 'Passion One';
+    font-family: 'Raleway';
 }
-
 .form-control {
     width: 40%;
     display: inline-block;
 }
-
 .btn btn-default {
     display: inline-block;
 }
-
 #starringActors {
     margin-top: 10px;
 }
-
 .btn {
     background-color: #333333;
     color: white;
 }
-
 .btn:active {
     color: white;
 }
-
-.btn.focus, .btn:focus, .btn:hover {
-    color: white;    
+.btn:hover {
+    color: white;
 }
-
+.btn:focus {
+    color: white;
+}
 .btn-info {
     background: black;
 }
-
 a button {
-    color: black;
+    color: white;
 }
-
 #plot {
     padding: 10px;
     background-color: #333333;
 }
-
 #switch-button {
     margin-top: 20px;
 }
-
 .tomato {
     display: inline-block;
     width: 20px;
     height: auto;
 }
-
 #trail {
     padding: 5px;
     /*background-color: black;*/
     margin: 0 auto;
     margin-top: 5px;
 }
-
-iframe, object, embed {
+iframe,
+object,
+embed {
     max-width: 100%;
     padding: 10px;
     margin-bottom: 20px;
     background-color: white;
     box-shadow: 2px 2px 2px #888888;
 }
-
 #movie-info {
     width: 40%;
     margin: 0 auto;
@@ -146,11 +137,9 @@ iframe, object, embed {
     color: #262626;
     background-color: rgba(255, 255, 255, 0.6);
 }
-
 #movie-info h2 {
     margin-top: 5px;
 }
-
 #plot-extended {
     background-color: #333333;
     /*box-shadow:inset 0px 0px 5px #888888;*/
@@ -158,13 +147,17 @@ iframe, object, embed {
     box-sizing: border-box;
     padding: 10px;
 }
-
 #trailer-info {
     margin-top: 25px;
 }
-
 #randomMovieButton {
     display: block;
     margin: 0 auto;
     margin-top: 25px;
+}
+.btn-sbs-l {
+    margin-right: 15px;
+}
+.btn-sbs-r {
+    margin-left: 15px;
 }

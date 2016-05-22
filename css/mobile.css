@@ -1,48 +1,43 @@
-@media screen and (max-width: 640px) {
-    
-    body {
-        background-color: white;   
-    }
-    
-    #container {
-        margin-left: 10px;
-        margin-right: 10px;
-    }
-    
-    #main {
-        background-image: none;
-        color: darkgray;
-    }
-    
-    #movie-info {
-        margin: 0 auto;
-        margin-top: 15px;
-    }
-    
-}
-
 @media screen and (max-width: 1200px) {
-
-    
     #movie-info {
         width: 85%;
         margin: 0 auto;
+        margin-top: 25px;
     }
-    
     #logo {
         width: 85%;
         margin: 0 auto;
     }
-    
     #poster {
         width: 75%;
         height: auto;
     }
-    
     #main {
         margin: 0 auto;
     }
+    #movieSearchBox {
+        width: 75%;
+        padding: 5px;
+    }
 }
-
-
-
+@media screen and (max-width: 640px) {
+    body {
+        background-color: white;
+    }
+    #container {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    #main {
+        background-image: none;
+        color: darkgray;
+    }
+    #movie-info {
+        margin: 0 auto;
+        margin-top: 15px;
+    }
+    #movieSearchBox {
+        width: 95%;
+        padding: 15px;
+    }
+}
