@@ -54,6 +54,9 @@ body {
     padding: 25px;
     /*box-shadow: 1px 1px 1px #888888;*/
 }
+#metascore {
+    font-size: 18px;
+}
 #poster {
     width: 25%;
     /*width: 250px;*/
@@ -129,7 +132,7 @@ embed {
     width: 40%;
     margin: 0 auto;
     padding: 15px;
-    padding-bottom: 40px;
+    /*padding-bottom: 40px;*/
     display: inline-block;
     vertical-align: top;
     margin-top: 35px;
@@ -160,4 +163,12 @@ embed {
 }
 .btn-sbs-r {
     margin-left: 15px;
+}
+#ratingMeter {
+    width: 0%;
+    transition: width 1.5s;
+}
+.progress {
+    margin-bottom: 0;
+    margin-top: 10px;
 }

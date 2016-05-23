@@ -3,6 +3,7 @@ var controllers = angular.module('movieControllers', []);
 controllers.controller('MainController', function ($scope, $http) {
     $scope.movies = [];
     $scope.trailers = '';
+    $scope.metascore = '';
     $scope.movieId = ''; //'tt2294629';
     $scope.embedCode = '';
     $scope.backdrops = '';
@@ -11,6 +12,7 @@ controllers.controller('MainController', function ($scope, $http) {
     $scope.topTenMovie = '';
     $scope.rated = '';
     $scope.runningTime = '';
+    $scope.textRating = '';
 
     $scope.movies = $scope.noResults;
 
@@ -49,6 +51,8 @@ controllers.controller('MainController', function ($scope, $http) {
             $scope.movieId = response.data.imdbID;
             $scope.rated = response.data.Rated;
             $scope.runningTime = response.data.Runtime;
+            $scope.metascore = response.data.Metascore;
+            setScoreColor($scope.metascore);
             getTrailer();
 
 
@@ -144,6 +148,69 @@ controllers.controller('MainController', function ($scope, $http) {
             return false;
         }
     };
+    
+    var setScoreColor = function(val) {
+        var meterText = "";
+      
+        if(val>=0 && val <=19) {
+            document.getElementById('metascore').style.color = "#FF0000";
+            meterText = "Overwhelming dislike";
+            $scope.textRating = meterText;
+            setTimeout(function(){
+                setRatingMeter(val, "#FF0000");                
+            }, 700);
+        }
+        
+        else if(val>=20 && val <=49) {
+            document.getElementById('metascore').style.color = "#FF0000";
+            meterText = "Generally unfavorable";
+            $scope.textRating = meterText;
+            setTimeout(function(){
+                setRatingMeter(val, "#FF0000");                                
+            }, 700);            
+
+        }
+        
+        else if(val>=50 && val <=74) {
+            document.getElementById('metascore').style.color = "#FFCC33";
+            meterText = "Mixed or average";
+            $scope.textRating = meterText;
+            setTimeout(function(){
+                setRatingMeter(val, "#FFCC33");                    
+            }, 700);            
+            
+        }
+        
+        else if(val>=75 && val <=89) {
+            document.getElementById('metascore').style.color = "#66CC33";
+            meterText = "Generally favorable";
+            $scope.textRating = meterText;
+            setTimeout(function(){
+                setRatingMeter(val, "#66CC33");                   
+            }, 700);            
+            
+        }
+        
+        else if(val>=90 && val <=100) {
+            document.getElementById('metascore').style.color = "#66CC33";
+            meterText = "Universal acclaim";
+            $scope.textRating = meterText;
+            setTimeout(function(){
+                setRatingMeter(val, "#66CC33");                                
+            }, 700);            
+            
+        }        
+        
+        else {
+            document.getElementById('metascore').style.color = "black";
+            meterText = "N/A";
+            $scope.textRating = meterText;            
+            setTimeout(function(){
+                setRatingMeter(0, "black");
+            }, 700);
+        }
+        
+    };
 
     var setBg = function (val) {
         document.getElementById('main').style.backgroundImage = "url('https://image.tmdb.org/t/p/original" + val + "')";
@@ -151,6 +218,12 @@ controllers.controller('MainController', function ($scope, $http) {
         document.getElementById('main').style.backgroundImage = "background-repeat: no-repeat";
         document.getElementById('bg').style.backgroundImage = "url('https://image.tmdb.org/t/p/original" + $scope.backdrops.file_path + "')";
         document.getElementById('bg').style.backgroundImage = "background-size: cover";
+    };
+    
+    var setRatingMeter = function(meterWidth, color) {
+        //set back to zero to start
+        document.getElementById('ratingMeter').style.width = meterWidth+"%";
+        document.getElementById('ratingMeter').style.background = color;
     };
 
     $scope.getRandomMovie = function () {

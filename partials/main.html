@@ -18,17 +18,20 @@
         <!--<h4 style="margin-top: 20px;" ng-hide="movies.Poster">No results found! Try entering the full name.</h4>-->
         <h4 ng-model="alertMessage">{{alertMessage}}</h4>
         <p id="starringActors" ng-show="movies.Plot">{{movies.Actors}}</p>
-        <p ng-show="movies.Plot"><b>Metascore: </b>{{movies.Metascore}} <b></p><p ng-show="movies.Plot"> IMDB:</b> {{movies.imdbRating}} ({{movies.imdbVotes}} Votes)</p>
-        <p ng-show="movies.Plot" style="text-align: center"><b>Rotten Tomatoes</b>
-        </p>
+        <p ng-show="movies.Plot"><b>IMDB:</b> {{movies.imdbRating}} ({{movies.imdbVotes}} Votes)</p>
+        <p ng-show="movies.Plot" style="text-align: center"><b>Rotten Tomatoes</b></p>
         <div ng-show="movies.Plot">
             <a ng-href="{{movies.tomatoURL}}reviews/?sort=fresh" class="hvr-pop" target="_blank">
                 <img class="tomato" src="images/fresh.png">
             </a>&nbsp;{{movies.tomatoFresh}} &nbsp;&nbsp;
             <a ng-href="{{movies.tomatoURL}}reviews/?sort=rotten" class="hvr-pop" target="_blank">
                 <img class="tomato" src="images/rotten.png">
-            </a>&nbsp;{{movies.tomatoRotten}}</div>
-
+            </a>&nbsp;{{movies.tomatoRotten}}
+            <p ng-show="movies.Plot"><b>Metascore: </b><span id="metascore">&nbsp;{{metascore}}</span> <b></p>
+            <div class="progress">
+                <div id="ratingMeter"  class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="">{{textRating}}</div>
+            </div>
+        </div>
     </div>
 
     <div id="trailer-info">
