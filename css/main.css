@@ -167,8 +167,17 @@ embed {
 #ratingMeter {
     width: 0%;
     transition: width 1.5s;
+    color: black;
+    text-align: center;
+    overflow: visible;
 }
 .progress {
     margin-bottom: 0;
     margin-top: 10px;
+}
+#ratingText {
+    width: 100%; 
+    position: absolute; 
+    text-align: center; 
+    margin: 0 auto;
 }

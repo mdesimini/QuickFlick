@@ -28,8 +28,9 @@
                 <img class="tomato" src="images/rotten.png">
             </a>&nbsp;{{movies.tomatoRotten}}
             <p ng-show="movies.Plot"><b>Metascore: </b><span id="metascore">&nbsp;{{metascore}}</span> <b></p>
-            <div class="progress">
-                <div id="ratingMeter"  class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="">{{textRating}}</div>
+            <div class="progress"  style="position: relative">
+                <div id="ratingMeter"  class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style=""></div>
+                <p id="ratingText">{{textRating}}</p>
             </div>
         </div>
     </div>
