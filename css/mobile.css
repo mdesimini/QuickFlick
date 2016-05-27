@@ -19,6 +19,9 @@
         width: 75%;
         padding: 5px;
     }
+    .clear-btn {
+        vertical-align: top;
+    }  
 }
 @media screen and (max-width: 640px) {
     body {
@@ -37,7 +40,19 @@
         margin-top: 15px;
     }
     #movieSearchBox {
-        width: 95%;
+        width: 60%;
         padding: 15px;
     }
+    .clear-btn {
+        vertical-align: top;
+    }    
+    #knownForContainer{
+        width: 90%;
+    }
+    #popItem {
+        width: 45%;
+    }
+    #similarItems {
+        width: 45%;
+    }    
 }

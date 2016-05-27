@@ -9,9 +9,9 @@ app.config(['$routeProvider',
             templateUrl: 'partials/main.html',
             controller: 'MainController'
         });
-        $routeProvider.when('/recommend', {
+        $routeProvider.when('/actor-search', {
             templateUrl: 'partials/recommend.html',
-            controller: 'MainController'
+            controller: 'ActorController'
         });
         $routeProvider.otherwise({
             redirectTo: '/'

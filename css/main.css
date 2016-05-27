@@ -9,6 +9,26 @@ body {
     height: 100%;*/
     background-size: cover;
 }
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {   
+  border-color: rgba(173, 173, 173, 0.8);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(173, 173, 173, 0.6);
+  outline: 0 none;
+}
 ::selection {
   background: #bfbfbf; /* WebKit/Blink Browsers */
 }
@@ -30,35 +50,60 @@ body {
     margin: 0 auto;
 }
 #container {
-    max-width: 1000px;
+    max-width: 975px;
     margin: 0 auto;
-    margin-top: 3%;
+    /*margin-top: 1%;*/
     margin-bottom: 3%;
-    background-color: #333333;
+    /*background-color: #333333;*/
     height: 100%;
-    padding: 10px;
+    padding:10px;
+    padding-top: 5px;
     /*box-shadow: 1px 1px 1px #888888;*/
 }
 #main {
     max-width: 950px;
     height: auto;
     margin: 0 auto;
-    margin-top: 15px;
-    margin-bottom: 15px;
+    /*margin-top: 15px;
+    margin-bottom: 15px;*/
     box-sizing: border-box;
     /*background: url('../images/transparent.png') repeat center top;*/
     background-color: white;
     background-size: cover;
     text-align: center;
     /*border-radius: 300px/100px;*/
-    padding: 25px;
+    /*padding: 25px;*/
     /*box-shadow: 1px 1px 1px #888888;*/
 }
+#nav {
+    max-width: 400px;
+    display: block;
+    margin: 0 auto;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+#nav li{
+    max-width: 400px;
+    text-align: center;
+    margin: 0 auto;
+}
+.nav-pills>li {
+    float: none;
+    display: inline-block;
+}
+.nav-pills>li>a{
+    color: #7c7c7c;
+}
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+    background: #333333;
+}
+
 #metascore {
     font-size: 18px;
 }
 #poster {
-    width: 25%;
+    width: 30%;
     /*width: 250px;*/
     height: auto;
     margin: 0 auto;
@@ -138,15 +183,15 @@ embed {
     margin-top: 35px;
     margin-left: 5%;
     color: #262626;
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0.75);
 }
 #movie-info h2 {
     margin-top: 5px;
 }
 #plot-extended {
-    background-color: #333333;
-    /*box-shadow:inset 0px 0px 5px #888888;*/
-    color: white;
+    /*background-color: #333333;
+    box-shadow:inset 0px 0px 5px #888888;
+    color: white;*/
     box-sizing: border-box;
     padding: 10px;
 }
@@ -154,6 +199,11 @@ embed {
     margin-top: 25px;
 }
 #randomMovieButton {
+    display: block;
+    margin: 0 auto;
+    margin-top: 25px;
+}
+#randomActorButton {
     display: block;
     margin: 0 auto;
     margin-top: 25px;
@@ -180,4 +230,108 @@ embed {
     position: absolute; 
     text-align: center; 
     margin: 0 auto;
+}
+#actorBtn {
+    margin-bottom: 25px;
+}
+#movieReturnBtn {
+    margin: 25px;
+}
+#actorWrapper {
+    width: 100%;
+    margin: 0 auto;
+}
+.actorInfo{
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 10px;
+    background-color: #f9f9f9;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.actorInfo img {
+    width: 15%;
+    display: inline-block;
+}
+#knownForContainer {
+    width: 70%;
+    display: inline-block;
+    vertical-align: top;
+}
+#knownFor{
+    width: inherit;
+    margin: 0 auto;
+    display: block;
+    text-align: left;
+    padding: 5px;
+}
+#knownFor img {
+    width: 40px;
+    height: auto;
+    display: inline-block;
+}
+#knownFor h5{
+    margin-left: 10px;
+    
+    display: inline-block;
+}
+#knownFor a h5{
+    cursor: pointer;
+}
+.overview {
+    padding: 5px;
+    margin: 5px;
+}
+#popularNow {
+    width: 100%;
+    margin: 0 auto;
+}
+#popItem {
+    width: 20%;
+    display: inline-block;
+    vertical-align: top;
+    padding: 5px;
+}
+#popItem p:hover {
+    cursor: pointer;
+}
+#popPoster:hover {
+    cursor: pointer;
+}
+#popularNowHeading:hover {
+    cursor: pointer;
+}
+#actorNameHeadingLink:hover {
+    cursor: pointer;
+}
+.clear-btn {
+    vertical-align: top;
+}
+#similarItemButton{
+    margin: 15px;
+}
+#similarItemContainer{
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+#similarItems {
+    width: 15%;
+    padding: 10px;
+    display: inline-block;
+    margin: 0 auto;
+    margin-left: 5px;
+    margin-right: 5px;
+    text-align: center;
+    vertical-align: top;
+}
+#simParagraph {
+    cursor: pointer;    
+}
+#newReleaseHeading:hover {
+    cursor: pointer;
+}
+#upcomingHeading:hover {
+    cursor: pointer;
 }

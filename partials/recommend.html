@@ -1,4 +1,26 @@
-<div>
-    <a href="#/"><button class="btn">Get Movie Information</button></a>
+<div id="actorMain">
+    <h2 id="pageTitle">Actor Search</h2>
+        <ul id="nav" class="nav nav-pills">
+          <li role="presentation"><a href="#/">Movie Search</a></li>
+          <li role="presentation" class="active"><a href="#/actor-search">Actor Search</a></li>
+        </ul>     
+    <!--<a href="#/"><button id="movieReturnBtn" class="btn">Movie Search</button></a>-->
+    <form >
+        <input style="margin-bottom: 25px;" id="movieSearchBox" class="form-control" ng-model="actorName" ng-model-options="{ debounce: 100 }" type="text" placeholder="Enter Actor/Actress Name" autofocus>           <button class="btn clear-btn" value="Clear" ng-click="clearSearch()">Clear</button>
+        <!--<input type="button" id="randomActorButton" class="btn" value="Random Movie">-->  <!-- ng-click="getRandomMovie()">-->
+    </form>
+    <!--<h5 style="text-align: left">Results</h5>-->
+    <div id="actorWrapper">
+        <div class="actorInfo" ng-repeat="actor in actors | limitTo: 8"> <!-- orderBy : 'popularity' : reverse -->
+            <a id="actorNameHeadingLink"><h4 ng-click="selectSearch(actor.name)">{{actor.name}}</h4></a><a ng-href="https://www.themoviedb.org/person/{{actor.id}}" target="_blank"><p>(more)</p></a>
+            <!--<h6>Popularity: {{actor.popularity}}</h6>-->
+            <img class="img-thumbnail" ng-src="{{actor.profile_path==null ? 'http://www.mattdesimini.com/apps/QuickFlick/images/image-unavailable.jpg' : 'https://image.tmdb.org/t/p/original'+actor.profile_path}}">
+            <div id="knownForContainer">
+                <div id="knownFor" ng-repeat="a in actor.known_for">
+                    <img ng-src="{{a.poster_path==null ? 'http://www.mattdesimini.com/apps/QuickFlick/images/image-unavailable.jpg' : 'https://image.tmdb.org/t/p/original'+a.poster_path}}"><a data-toggle="collapse" data-target=".overview"><h5>{{a.original_title}}</h5></a>
+                    <p class="overview collapse" style="font-size: 10px;">{{a.overview}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-

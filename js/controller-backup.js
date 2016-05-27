@@ -21,8 +21,6 @@ controllers.controller('MainController', function ($scope, $http) {
     $scope.movies = $scope.noResults;
 
 
-    
-
     $scope.$watch('movieName', function () {
         if (!$scope.movieName) {
             //$scope.alertMessage = 'Test!!';
@@ -82,11 +80,8 @@ controllers.controller('MainController', function ($scope, $http) {
             //setScoreColor($scope.metascore);
             
             
-            
-            getBackdrops();
-            getPoster();
             getTrailer();
-            getSimilarMovie($scope.movieId);
+
 
         }, function errorCallback(response) {
 
@@ -113,8 +108,7 @@ controllers.controller('MainController', function ($scope, $http) {
             //console.log('success');
             $scope.trailers = response.data.results[0];
             if($scope.trailers.key){
-                $scope.embedCode = '<iframe id="traileriframe" width="560" height="315" src="https://www.youtube.com/embed/' + $scope.trailers.key + '" frameborder="0" allowfullscreen></iframe>';  
-                console.log('got trailer');
+                $scope.embedCode = '<iframe id="traileriframe" width="560" height="315" src="https://www.youtube.com/embed/' + $scope.trailers.key + '" frameborder="0" allowfullscreen></iframe>';    
             }
             else {
                 console.error('no trailer found');
@@ -129,7 +123,7 @@ controllers.controller('MainController', function ($scope, $http) {
 
         });
 
-        //getBackdrops();
+        getBackdrops();
     };
 
     var getBackdrops = function () {
@@ -150,7 +144,7 @@ controllers.controller('MainController', function ($scope, $http) {
 
         });
 
-        //getPoster();
+        getPoster();
     };
 
     var getPoster = function () {
@@ -171,8 +165,7 @@ controllers.controller('MainController', function ($scope, $http) {
 
         });
         
-        //getSimilarMovie($scope.movieId);
-        
+        getSimilarMovie($scope.movieId);
         //setTimeout (setPosterStyling, 1500 );
         setTimeout(function(){ 
             $('#poster').removeClass();
@@ -331,7 +324,7 @@ controllers.controller('MainController', function ($scope, $http) {
         
     };
     
-        //getPopularNow();
+        getPopularNow();
     
     $scope.searchPop = function(val) {
         console.log('pressed');
@@ -385,7 +378,7 @@ controllers.controller('MainController', function ($scope, $http) {
         
     };    
     
-    //getNewReleases();
+    getNewReleases();
     
     var getUpcoming = function(val) {
         //http://api.themoviedb.org/3/movie/271110/similar?api_key=e480151695b9b1e60ac9adbf32ae1828  
@@ -406,7 +399,7 @@ controllers.controller('MainController', function ($scope, $http) {
         
     };    
     
-    //getUpcoming();
+    getUpcoming();
     
     var setPosterStyling = function() {
 
@@ -454,15 +447,6 @@ controllers.controller('MainController', function ($scope, $http) {
         $scope.clearSearch();
         $scope.setDefaultStyles();
     };
-    
-    
-    $(document).ready(function() { /* code here */ 
-    
-        getPopularNow();
-        getNewReleases();
-        getUpcoming();        
-    
-    });    
 
     //setTimeout($scope.hide, 1000);
     //setTimeout($scope.set, 2000);

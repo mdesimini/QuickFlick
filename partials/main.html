@@ -1,20 +1,53 @@
+<!-- toggle search by title to by actor -->
 <div id="home">
     <div>
         <h2 id="pageTitle">Movie/TV Search</h2>
+            <ul id="nav" class="nav nav-pills">
+              <li role="presentation" class="active"><a href="#/">Movie Search</a></li>
+              <li role="presentation"><a href="#/actor-search" ng-click="setDefaultStyles()">Actor Search</a></li>
+            </ul>  
+        <!--<a href="#/actor-search"><button id="actorBtn" ng-click="setDefaultStyles()" type="button" class="btn" data-toggle="button">Actor Search</button></a>-->
+        <!--<button ng-click="resetAll()">Reset Form</button>-->
         <form>
             <input id="movieSearchBox" class="form-control" ng-model="movieName" ng-model-options="{ debounce: 800 }" type="text" placeholder="Enter Title" autofocus>
+            <button class="btn" value="Clear" ng-click="clearSearch()">Clear</button>
             <input type="button" id="randomMovieButton" class="btn" value="Random Movie" ng-click="getRandomMovie()">
+        </form>            
+            <a href="#popularNow" data-toggle="collapse" data-target="#popularNow"><h3 id="popularNowHeading">Popular Now <span style="font-size: 12px;">(hide/show)</span></h3></a>
+            <div id="popularNow" class="collapse in well">
+                <div id="popItem" ng-repeat="pop in popularNow | limitTo: 5">
+                    <img class="hvr-float" id="popPoster" ng-src="http://image.tmdb.org/t/p/w185{{pop.poster_path}}" ng-click="searchPop(pop.title)" width="50">
+                    <p style="font-size: 12px; padding: 5px;" id="popParagraph" ng-click="searchPop(pop.title)">{{pop.title}}</p>
+                </div>
+            </div>   
+            <a href="#newRelease" data-toggle="collapse" data-target="#newRelease" ><h3 id="newReleaseHeading" >New Releases <span style="font-size: 12px;">(hide/show)</span></h3></a>            
+            <div id="newRelease" class="collapse well">
+                <div id="popItem" ng-repeat="pop in newReleases | limitTo: 5">
+                    <img class="hvr-float" id="popPoster" ng-src="http://image.tmdb.org/t/p/w185{{pop.poster_path}}" ng-click="searchPop(pop.title)" width="50">
+                    <p style="font-size: 12px; padding: 5px;" id="popParagraph" ng-click="searchPop(pop.title)">{{pop.title}}</p>
+                </div>
+            </div> 
+            <a href="#upcoming" data-toggle="collapse" data-target="#upcoming" ><h3 id="upcomingHeading" >Coming Soon <span style="font-size: 12px;">(hide/show)</span></h3></a>
+            <div id="upcoming" class="collapse well">
+                <div id="popItem" ng-repeat="pop in upcoming | limitTo: 5">
+                    <img class="hvr-float" id="popPoster" ng-src="http://image.tmdb.org/t/p/w185{{pop.poster_path}}" ng-click="searchPop(pop.title)" width="50">
+                    <p style="font-size: 12px; padding: 5px;" id="popParagraph" ng-click="searchPop(pop.title)">{{pop.title}}</p>
+                </div>
+            </div>               
             <!-- ng-model="movieName">-->
             <!--<input type="submit" class="btn btn-default">-->
-        </form>
+
         <!--<a href="#/recommend"><button class="btn" id="switch-button">Don't Know What To Watch?</button></a>-->
         <!--<img ng-src="https://image.tmdb.org/t/p/original{{backdrops.file_path}}" width="300" height="auto">-->
     </div>
     <img id="poster" ng-src="{{posterPic}}" ng-show="movies.Plot">
-    <div id="movie-info">
+    <div id="movie-info" ng-show="movies.Plot">
         <a ng-href="http://www.imdb.com/title/{{movieId}}" target="_blank"><h2 style="display: inline-block">{{movies.Title}}</h2></a>
-        <p ng-show="movies.Plot">{{rated}}&nbsp;|&nbsp;{{runningTime}}&nbsp;|&nbsp;{{movies.Year}}</p>
-        <h4 style="margin-top: 20px;" ng-show="movies.Plot">Starring</h4>
+        <p><i>{{movies.Genre}}</i></p>
+        <p ng-show="movies.Plot">{{rated}}&nbsp;|&nbsp;{{runningTime}}&nbsp;|&nbsp;{{movies.Country}}&nbsp;|&nbsp;{{movies.Year}}</p>
+        <p ng-show="movies.Plot"><b>Directed By</b></p>
+        <p ng-show="movies.Plot">{{movies.Director}}</p>
+        <p ng-show="movies.Plot"><b>Starring</b></p>
         <!--<h4 style="margin-top: 20px;" ng-hide="movies.Poster">No results found! Try entering the full name.</h4>-->
         <h4 ng-model="alertMessage">{{alertMessage}}</h4>
         <p id="starringActors" ng-show="movies.Plot">{{movies.Actors}}</p>
@@ -27,7 +60,7 @@
             <a ng-href="{{movies.tomatoURL}}reviews/?sort=rotten" class="hvr-pop" target="_blank">
                 <img class="tomato" src="images/rotten.png">
             </a>&nbsp;{{movies.tomatoRotten}}
-            <p ng-show="movies.Plot"><b>Metascore: </b><span id="metascore">&nbsp;{{metascore}}</span> <b></p>
+            <p ng-hide="metascore=='N/A'"><b>Metascore: </b><span id="metascore">&nbsp;{{metascore}}</span> <b></p>
             <div class="progress"  style="position: relative">
                 <div id="ratingMeter"  class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style=""></div>
                 <p id="ratingText">{{textRating}}</p>
@@ -35,16 +68,24 @@
         </div>
     </div>
 
-    <div id="trailer-info">
-        <button ng-show="movies.Plot" type="button" class="btn btn-sbs-l" data-toggle="collapse" data-target="#plot-extended" style="margin-top: 20px; margin-bottom: 20px;" ng-model="valTest">Expand Plot</button>
-        <a ng-href="http://www.amazon.com/s/ref=nb_sb_noss_1?url=search-alias%3Ddvd&field-keywords={{movieName}}" target="_blank">
-            <button ng-show="movies.Plot" type="button" class="btn btn-sbs-r" style="margin-top: 20px; margin-bottom: 20px;">Buy</button>
+    <div id="trailer-info" ng-show="movies.Plot">
+        <!--<button ng-show="movies.Plot" type="button" class="btn btn-sbs-l" data-toggle="collapse" data-target="#plot-extended" style="margin-top: 20px; margin-bottom: 20px;" ng-model="valTest">Expand Plot</button>
+        <a ng-href="http://www.amazon.com/s/ref=nb_sb_noss_1?url=search-alias%3Ddvd&field-keywords={{movieName}}" target="_blank"> 
+            <button ng-show="movies.Plot" type="button" class="btn btn-sbs-r" style="margin-top: 20px; margin-bottom: 20px;">Buy</button> -->
         </a>
-        <p id="plot-extended" class="collapse">{{movies.Plot}}</p>
+        <p id="plot-extended" class="collapse in well">{{movies.Plot}}</p>
         <p>{{trailers.title}}</p>
         <!--{{trailers.code}}-->
         <!--<button class="btn" ng-click="showingTrailer()">Trailer</button>-->
     </div>
 
     <div id="trail"></div>
+    <!--<button id="similarItemButton" ng-show="movies.Plot" class="btn" data-toggle="collapse" data-target="#similarItemContainer">Similar Films</button>-->
+    <div id="similarItemContainer" class="collapse in well" ng-show="movies.Plot">
+        <h3 ng-show="movies.Plot">You may also like</h3>
+        <div id="similarItems" ng-show="similarFilms" ng-repeat="sim in similarFilms | limitTo:5">
+            <img class="hvr-float" id="popPoster" ng-src="http://image.tmdb.org/t/p/w185{{sim.poster_path}}" ng-click="searchPop(sim.title)" width="50">
+            <p id="simParagraph" ng-click="searchPop(sim.title)">{{sim.title}}</p>
+        </div>    
+    </div>
 </div>
