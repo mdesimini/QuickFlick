@@ -1,7 +1,8 @@
 <div id="actorMain">
-    <h2 id="pageTitle">Actor Search</h2>
+    <a ng-href="#/" ><img id="logo" src="images/logo3.png"></a>    
+    <!--<h2 id="pageTitle">Actor Search</h2>-->
         <ul id="nav" class="nav nav-pills">
-          <li role="presentation"><a href="#/">Movie Search</a></li>
+          <li role="presentation"><a href="#/" ng-click="setDefaultStyles()">Movie Search</a></li>
           <li role="presentation" class="active"><a href="#/actor-search">Actor Search</a></li>
         </ul>     
     <!--<a href="#/"><button id="movieReturnBtn" class="btn">Movie Search</button></a>-->
@@ -17,10 +18,10 @@
             <img class="img-thumbnail" ng-src="{{actor.profile_path==null ? 'http://www.mattdesimini.com/apps/QuickFlick/images/image-unavailable.jpg' : 'https://image.tmdb.org/t/p/original'+actor.profile_path}}">
             <div id="knownForContainer">
                 <div id="knownFor" ng-repeat="a in actor.known_for">
-                    <img ng-src="{{a.poster_path==null ? 'http://www.mattdesimini.com/apps/QuickFlick/images/image-unavailable.jpg' : 'https://image.tmdb.org/t/p/original'+a.poster_path}}"><a data-toggle="collapse" data-target=".overview"><h5>{{a.original_title}}</h5></a>
-                    <p class="overview collapse" style="font-size: 10px;">{{a.overview}}</p>
+                    <img ng-src="{{a.poster_path==null ? 'http://www.mattdesimini.com/apps/QuickFlick/images/image-unavailable.jpg' : 'https://image.tmdb.org/t/p/original'+a.poster_path}}"><a ng-href="#/search/{{a.original_title}}"><h5>{{a.original_title}}</h5></a>
                 </div>
             </div>
         </div>
     </div>
+    <p style="text-align: center; margin: 10px;">2016 QuickFlick - Matt Desimini</p>
 </div>

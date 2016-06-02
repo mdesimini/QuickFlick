@@ -1,6 +1,8 @@
 var controllers = angular.module('movieControllers', []);
 
-controllers.controller('MainController', function ($scope, $http) {
+
+//main controller
+controllers.controller('MainController', function ($scope, $rootScope, $http, $routeParams, $location) {
     $scope.movies = [];
     $scope.trailers = '';
     $scope.metascore = '';
@@ -17,12 +19,22 @@ controllers.controller('MainController', function ($scope, $http) {
     $scope.similarFilms = [];
     $scope.newReleases = [];
     $scope.upcoming = [];
+    $scope.favorites = [];
 
     $scope.movies = $scope.noResults;
 
-
+    var search_query = $routeParams.search_query;
     
-
+    var setFromQuery = function() {
+        $scope.movieName = search_query;
+    };
+    
+    $scope.copyToClipboard = function() {
+        var text = "http://www.mattdesimini.com/apps/QuickFlick/#/search/" + $scope.movieName;
+        //var text = "http://localhost/IMDB%20App/#/search/" + $scope.movieName;
+        window.prompt("Copy to clipboard: Ctrl+C, Enter", text);
+    };
+    
     $scope.$watch('movieName', function () {
         if (!$scope.movieName) {
             //$scope.alertMessage = 'Test!!';
@@ -53,6 +65,8 @@ controllers.controller('MainController', function ($scope, $http) {
 
     $scope.movieName = '';
 
+    
+
     var searchMovie = function () {
         $http({
             url: 'http://www.omdbapi.com/?',
@@ -71,6 +85,10 @@ controllers.controller('MainController', function ($scope, $http) {
             $scope.rated = response.data.Rated;
             $scope.runningTime = response.data.Runtime;
             $scope.metascore = response.data.Metascore;
+            getBackdrops();
+            getPoster();
+            getTrailer();
+            getSimilarMovie($scope.movieId);            
             if($scope.metascore!='N/A') {
                 setScoreColor($scope.metascore);
                 console.log('meta used');
@@ -81,12 +99,6 @@ controllers.controller('MainController', function ($scope, $http) {
             }
             //setScoreColor($scope.metascore);
             
-            
-            
-            getBackdrops();
-            getPoster();
-            getTrailer();
-            getSimilarMovie($scope.movieId);
 
         }, function errorCallback(response) {
 
@@ -143,9 +155,9 @@ controllers.controller('MainController', function ($scope, $http) {
             $scope.backdrop_fp = $scope.backdrops.file_path;
 
         }, function errorCallback(response) {
-
             console.error('backdrop error');
             document.getElementById('bg').style.backgroundImage = "none";
+            document.getElementById('container').style.background = "none";
             //$scope.trailers = $scope.noResults;
 
         });
@@ -259,11 +271,12 @@ controllers.controller('MainController', function ($scope, $http) {
     };
 
     var setBg = function (val) {
-        document.getElementById('main').style.backgroundImage = "url('https://image.tmdb.org/t/p/original" + val + "')";
-        document.getElementById('main').style.backgroundImage = "background-size: cover";
-        document.getElementById('main').style.backgroundImage = "background-repeat: no-repeat";
+        //document.getElementById('main').style.backgroundImage = "url('https://image.tmdb.org/t/p/original" + val + "')";
+        //document.getElementById('main').style.backgroundImage = "background-size: cover";
+        //document.getElementById('main').style.backgroundImage = "background-repeat: no-repeat";
         document.getElementById('bg').style.backgroundImage = "url('https://image.tmdb.org/t/p/original" + $scope.backdrops.file_path + "')";
-        document.getElementById('bg').style.backgroundImage = "background-size: cover";
+        document.getElementById('container').style.background = "url('images/mask.png') repeat";
+        //document.getElementById('bg').style.backgroundImage = "background-size: cover";
     };
     
     var setRatingMeter = function(meterWidth, color) {
@@ -306,13 +319,13 @@ controllers.controller('MainController', function ($scope, $http) {
 
     
     $scope.setDefaultStyles = function() {
-        
         document.getElementById('main').style.backgroundImage = "none";
         document.getElementById('bg').style.backgroundImage = "none";   
+        document.getElementById('container').style.background = "none";
         console.log('styles cleared');
           
     };
-    
+
     var getPopularNow = function() {
       
         //http://api.themoviedb.org/3/movie/popular?api_key=e480151695b9b1e60ac9adbf32ae1828
@@ -320,8 +333,8 @@ controllers.controller('MainController', function ($scope, $http) {
             url: 'http://api.themoviedb.org/3/movie/popular?api_key=e480151695b9b1e60ac9adbf32ae1828',
             method: "GET"
         }).then(function successCallback(response) {
-
             $scope.popularNow = response.data.results;
+            console.log('got popular');
 
         }, function errorCallback(response) {
 
@@ -455,24 +468,117 @@ controllers.controller('MainController', function ($scope, $http) {
         $scope.setDefaultStyles();
     };
     
+    var navBarChange = function() {  
+        
+       var scroll_start = 0;
+       var startchange = $('#bg');
+       var offset = startchange.offset();
+       $(document).scroll(function() { 
+          scroll_start = $(this).scrollTop();
+          if(scroll_start > offset.top) {
+              $('#loginBanner').css('background-color', 'rgba(255, 255, 255, 0.75)');
+              //$('#loginBanner').css('box-shadow', '1px 2px 2px #888888');
+           } else {
+              $('#loginBanner').css('background-color', 'white');
+           }
+       });                
+    };
+    
+    $scope.addToFavorites = function(title, year) {
+        if($rootScope.currentUser) {
+            
+            console.log('Favorite Added');
+            
+            var filmTitle = title;
+            var filmYear = year
+            
+            console.log('title is:..');
+            console.log(filmTitle);
+            
+            //var sendData = {
+//                
+//            };
+            
+            $http({
+                url: 'https://scorching-inferno-5179.firebaseio.com/users/' +$rootScope.currentUser.regUser+ '/favorites.json',
+                method: "POST",
+                data: {title: filmTitle, year: filmYear}
+            }).then(function successCallback(response) {
+
+                //$scope.favorites = response.data; //.original_title;
+                //console.log($scope.favorites);
+                console.log('added to favorites');
+
+            }, function errorCallback(response) {
+
+                console.error('add to favorites error');
+
+            });                
+            
+        }
+        else {
+            $location.path("/login");
+            $scope.setDefaultStyles();
+            //alert('Sign In to add movies to favorites');
+        }
+    };
+    
+    
+    $scope.getFavorites = function() {
+          //$scope.favorites =
+        //console.log($rootScope.currentUser.regUser);
+        $http({
+            url: 'https://scorching-inferno-5179.firebaseio.com/users/' +$rootScope.currentUser.regUser+ '/favorites.json',
+            method: "GET"
+        }).then(function successCallback(response) {
+
+            $scope.favorites = response.data; //.original_title;
+            console.log('favorite from scope is');
+            console.log($scope.favorites);
+
+        }, function errorCallback(response) {
+
+            console.error('get favorites error');
+
+        });        
+        
+    };
+
+    $scope.deleteFavorite = function(selection) {
+      
+        $http({
+            url: 'https://scorching-inferno-5179.firebaseio.com/users/' +$rootScope.currentUser.regUser+ '/favorites.json',
+            method: "DELETE"
+        }).then(function successCallback(response) {
+
+            console.log('deleted');
+            $scope.getFavorites();
+
+        }, function errorCallback(response) {
+
+            console.error('delete favorites error');
+
+        });         
+        
+    };
+    
     
     $(document).ready(function() { /* code here */ 
-    
+        
+        navBarChange();
+        setFromQuery();
         getPopularNow();
         getNewReleases();
-        getUpcoming();        
+        getUpcoming();    
     
     });    
-
-    //setTimeout($scope.hide, 1000);
-    //setTimeout($scope.set, 2000);
     
 });
 
 
 
 
-
+//actor search controller
 controllers.controller('ActorController', function ($scope, $http) {
      
     $scope.actorName = '';
@@ -532,3 +638,20 @@ controllers.controller('ActorController', function ($scope, $http) {
     };
     
 });
+
+//registration controller
+controllers.controller('RegisterController', ['$scope', 'Authentication', function($scope, Authentication) {
+    
+    $scope.login = function() {
+      Authentication.login($scope.user);
+    };//login
+    
+    $scope.logout = function() {
+      Authentication.logout();  
+    };
+    
+    $scope.register = function() {
+      Authentication.register($scope.user);
+    };//register
+    
+}]);  //controller

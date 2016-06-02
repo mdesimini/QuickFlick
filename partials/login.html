@@ -1,0 +1,19 @@
+<a href="#/" ><img id="logo" src="images/logo3.png"></a>
+<h2>Login</h2>
+<p ng-show="message">{{message}}</p>
+<div id="loginContainer">
+    <form name="loginForm" ng-submit="login()" novalidate>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input ng-model="user.email" ng-required="true" type="email" name="email" class="form-control  form-control2" placeholder="Email">
+        <p class="error" ng-show="loginForm.email.$invalid && loginForm.email.$touched">Must be valid email!</p>    
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input ng-model="user.password" ng-required="true" name="password" type="password" class="form-control  form-control2" placeholder="Password">
+        <p class="error" ng-show="loginForm.password.$invalid && loginForm.password.$touched">Must enter a password!</p>
+      </div>
+      <button ng-disabled="loginForm.$invalid" type="submit" class="btn btn-default">Submit</button>
+      <p style="margin-top: 5px;">or <span style="font-size: 14px"><a href="#/register">Register</a></span></p>
+    </form>
+</div>

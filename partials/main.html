@@ -1,33 +1,35 @@
 <!-- toggle search by title to by actor -->
 <div id="home">
+    <a ng-href="#/" ng-click="setDefaultStyles()"><img id="logo" src="images/logo3.png"></a>
     <div>
-        <h2 id="pageTitle">Movie/TV Search</h2>
+        <!--<h2 id="pageTitle">Movie/TV Search</h2>-->
             <ul id="nav" class="nav nav-pills">
-              <li role="presentation" class="active"><a href="#/">Movie Search</a></li>
+              <li role="presentation" class="active"><a href="#/" ng-click="setDefaultStyles()">Movie Search</a></li>
               <li role="presentation"><a href="#/actor-search" ng-click="setDefaultStyles()">Actor Search</a></li>
             </ul>  
         <!--<a href="#/actor-search"><button id="actorBtn" ng-click="setDefaultStyles()" type="button" class="btn" data-toggle="button">Actor Search</button></a>-->
         <!--<button ng-click="resetAll()">Reset Form</button>-->
         <form>
-            <input id="movieSearchBox" class="form-control" ng-model="movieName" ng-model-options="{ debounce: 800 }" type="text" placeholder="Enter Title" autofocus>
+            <!-- ng-model-options="{ debounce: 650 }" -->
+            <input id="movieSearchBox" class="form-control" ng-model="movieName" ng-model-options="{ debounce: 650 }"  type="text" placeholder="Enter Title" autofocus>
             <button class="btn" value="Clear" ng-click="clearSearch()">Clear</button>
             <input type="button" id="randomMovieButton" class="btn" value="Random Movie" ng-click="getRandomMovie()">
         </form>            
-            <a href="#popularNow" data-toggle="collapse" data-target="#popularNow"><h3 id="popularNowHeading">Popular Now <span style="font-size: 12px;">(hide/show)</span></h3></a>
+            <a data-toggle="collapse" data-target="#popularNow"><h3 id="popularNowHeading">Popular Now <span style="font-size: 12px;">(hide/show)</span></h3></a>
             <div id="popularNow" class="collapse in well">
                 <div id="popItem" ng-repeat="pop in popularNow | limitTo: 5">
                     <img class="hvr-float" id="popPoster" ng-src="http://image.tmdb.org/t/p/w185{{pop.poster_path}}" ng-click="searchPop(pop.title)" width="50">
                     <p style="font-size: 12px; padding: 5px;" id="popParagraph" ng-click="searchPop(pop.title)">{{pop.title}}</p>
                 </div>
             </div>   
-            <a href="#newRelease" data-toggle="collapse" data-target="#newRelease" ><h3 id="newReleaseHeading" >New Releases <span style="font-size: 12px;">(hide/show)</span></h3></a>            
+            <a data-toggle="collapse" data-target="#newRelease" ><h3 id="newReleaseHeading" >New Releases <span style="font-size: 12px;">(hide/show)</span></h3></a>            
             <div id="newRelease" class="collapse well">
                 <div id="popItem" ng-repeat="pop in newReleases | limitTo: 5">
                     <img class="hvr-float" id="popPoster" ng-src="http://image.tmdb.org/t/p/w185{{pop.poster_path}}" ng-click="searchPop(pop.title)" width="50">
                     <p style="font-size: 12px; padding: 5px;" id="popParagraph" ng-click="searchPop(pop.title)">{{pop.title}}</p>
                 </div>
             </div> 
-            <a href="#upcoming" data-toggle="collapse" data-target="#upcoming" ><h3 id="upcomingHeading" >Coming Soon <span style="font-size: 12px;">(hide/show)</span></h3></a>
+            <a data-toggle="collapse" data-target="#upcoming" ><h3 id="upcomingHeading" >Coming Soon <span style="font-size: 12px;">(hide/show)</span></h3></a>
             <div id="upcoming" class="collapse well">
                 <div id="popItem" ng-repeat="pop in upcoming | limitTo: 5">
                     <img class="hvr-float" id="popPoster" ng-src="http://image.tmdb.org/t/p/w185{{pop.poster_path}}" ng-click="searchPop(pop.title)" width="50">
@@ -65,6 +67,8 @@
                 <div id="ratingMeter"  class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style=""></div>
                 <p id="ratingText">{{textRating}}</p>
             </div>
+            <button class="btn" id="copyToClipboardBtn" ng-click="copyToClipboard()">Copy Link</button>
+            <button  ng-click="addToFavorites(movies.Title, movies.Year)" class="btn" id="favoriteBtn">Add to favorites</button>
         </div>
     </div>
 
@@ -88,4 +92,5 @@
             <p id="simParagraph" ng-click="searchPop(sim.title)">{{sim.title}}</p>
         </div>    
     </div>
+    <p style="text-align: center; margin: 10px; padding: 10px;">2016 QuickFlick - Matt Desimini</p>
 </div>
