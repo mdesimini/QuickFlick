@@ -18,10 +18,10 @@
             <p>{{currentUser.firstname}} {{currentUser.lastname}} - Registered On: {{currentUser.date | date : format : short}}</p>
             <h3>Email</h3>
             <p>{{currentUser.email}}</p>
-            <h3>Favorites </h3><h5 id="clearList" ng-click="deleteFavorite()"> (Clear List)</h5>
-            <button class="btn" ng-click="getFavorites()">Load Favorites</button>
+            <h3>Favorites </h3><!--<h5 id="clearList" ng-click="deleteFavorite()"> (Clear List)</h5>-->
+            <!--<button class="btn" ng-click="getFavorites()">Load Favorites</button>-->
             <ul style="padding: 0">
-                <li  style="padding: 5px; margin: 5px; list-style-type: none" ng-repeat="fav in favorites"><a ng-href="#/search/{{fav.title}}">{{fav.title}} ({{fav.year}})</a></li>
+                <li style="padding: 5px; margin: 5px; list-style-type: none" ng-repeat="(key, fav) in favorites"><img style="margin: 10px;" src="{{fav.poster}}" width="35"><a ng-href="#/search/{{fav.title}}">{{fav.title}}</a><span id="deleteIcon" ng-click="deleteFavorite(key)"><img src="images/delete.png" width="15"></span></li>
             </ul>
         </div>
 </div>

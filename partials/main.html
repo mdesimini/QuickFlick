@@ -1,6 +1,6 @@
 <!-- toggle search by title to by actor -->
 <div id="home">
-    <a ng-href="#/" ng-click="setDefaultStyles()"><img id="logo" src="images/logo3.png"></a>
+    <a ng-href="#/" ><img id="logo" src="images/logo3.png"></a>
     <div>
         <!--<h2 id="pageTitle">Movie/TV Search</h2>-->
             <ul id="nav" class="nav nav-pills">
@@ -68,7 +68,8 @@
                 <p id="ratingText">{{textRating}}</p>
             </div>
             <button class="btn" id="copyToClipboardBtn" ng-click="copyToClipboard()">Copy Link</button>
-            <button  ng-click="addToFavorites(movies.Title, movies.Year)" class="btn" id="favoriteBtn">Add to favorites</button>
+            <button ng-click="addFavorite()" class="btn" id="favoriteBtn">Add to favorites</button>
+            <p style="margin: 5px; color: green">{{addedMessage}}</p>
         </div>
     </div>
 

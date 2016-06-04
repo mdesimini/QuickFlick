@@ -2,7 +2,7 @@ var controllers = angular.module('movieControllers', []);
 
 
 //main controller
-controllers.controller('MainController', function ($scope, $rootScope, $http, $routeParams, $location) {
+controllers.controller('MainController', function ($scope, $rootScope, $http, $routeParams, $location, $firebaseAuth, $firebaseArray, FIREBASE_URL) {
     $scope.movies = [];
     $scope.trailers = '';
     $scope.metascore = '';
@@ -20,9 +20,9 @@ controllers.controller('MainController', function ($scope, $rootScope, $http, $r
     $scope.newReleases = [];
     $scope.upcoming = [];
     $scope.favorites = [];
-
     $scope.movies = $scope.noResults;
-
+    $scope.addedMessage = ' ';
+    
     var search_query = $routeParams.search_query;
     
     var setFromQuery = function() {
@@ -483,6 +483,8 @@ controllers.controller('MainController', function ($scope, $rootScope, $http, $r
            }
        });                
     };
+ 
+/*    
     
     $scope.addToFavorites = function(title, year) {
         if($rootScope.currentUser) {
@@ -525,8 +527,7 @@ controllers.controller('MainController', function ($scope, $rootScope, $http, $r
     
     
     $scope.getFavorites = function() {
-          //$scope.favorites =
-        //console.log($rootScope.currentUser.regUser);
+
         $http({
             url: 'https://scorching-inferno-5179.firebaseio.com/users/' +$rootScope.currentUser.regUser+ '/favorites.json',
             method: "GET"
@@ -562,6 +563,44 @@ controllers.controller('MainController', function ($scope, $rootScope, $http, $r
         
     };
     
+*/  
+    
+    
+    var ref = new Firebase(FIREBASE_URL);
+    //console.log(ref);
+    var auth = $firebaseAuth(ref);
+    
+    var resetAddedStatus = function() {
+      
+        $scope.addedMessage = ' ';
+        
+    };
+    
+    auth.$onAuth(function(authUser) {
+       if(authUser) {
+           var favoritesRef = new Firebase(FIREBASE_URL + 'users/' + authUser.uid + '/favorites');
+           
+           var favoritesInfo = $firebaseArray(favoritesRef);
+           
+           $scope.favorites = favoritesInfo;
+           
+           $scope.addFavorite = function() {
+               favoritesInfo.$add({
+                   title: $scope.movieName,
+                   poster: $scope.posterPic
+               }).then(function() {
+                   console.log('add fav promise');
+                   $scope.addedMessage = 'Added To Favorites!';  
+                   setInterval(resetAddedStatus, 2000);
+               });
+           };
+           
+           $scope.deleteFavorite = function(key) {
+                favoritesInfo.$remove(key);
+           };
+       } 
+    });       
+    
     
     $(document).ready(function() { /* code here */ 
         
@@ -571,7 +610,9 @@ controllers.controller('MainController', function ($scope, $rootScope, $http, $r
         getNewReleases();
         getUpcoming();    
     
-    });    
+    });   
+    
+    
     
 });
 
@@ -635,7 +676,8 @@ controllers.controller('ActorController', function ($scope, $http) {
     $scope.clearSearch = function() {
         $scope.actorName = '';
         document.getElementById("movieSearchBox").focus();
-    };
+    };     
+    
     
 });
 
@@ -653,5 +695,13 @@ controllers.controller('RegisterController', ['$scope', 'Authentication', functi
     $scope.register = function() {
       Authentication.register($scope.user);
     };//register
+    
+}]);  //controller
+
+
+//account controller
+controllers.controller('AccountController', ['$scope', '$rootScope', '$firebaseAuth', '$firebaseArray', 'FIREBASE_URL', function($scope, $rootScope, $firebaseAuth, $firebaseArray, FIREBASE_URL) {
+    
+
     
 }]);  //controller
