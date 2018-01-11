@@ -15,4 +15,4 @@ An AngularJS application to retrieve Movie and TV Show information such as actor
 
 ##Demo
 
-[QuickFlick Demo](http://www.mattdesimini.com/apps/QuickFlick)
+[QuickFlick Demo](http://quickflick.online)
